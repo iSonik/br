@@ -2,19 +2,7 @@
 
 Browse directories from your terminal. Zero dependencies, pure zsh.
 
-```
-  ~/dev/my-project
-
-  + ../
-  + src/
-  + public/
-    README.md
-    package.json
-
-   open  copy path  reveal in finder
-
-  ↑↓ navigate · tab action · enter execute · esc quit
-```
+![br](screenshot.png)
 
 ## Install
 
