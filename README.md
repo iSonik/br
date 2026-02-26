@@ -2,7 +2,6 @@
 
 Browse directories from your terminal. Zero dependencies, pure zsh.
 
-![br](screenshot.png)
 
 ## Install
 
@@ -32,6 +31,7 @@ br
 ```sh
 rm -rf ~/.br && sed -i '' '/\.br\/br\.zsh/d' ~/.zshrc
 ```
+![br](screenshot.png)
 
 ## Requirements
 
