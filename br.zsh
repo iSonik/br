@@ -1,5 +1,5 @@
 br() {
-    local sel=0 act=0 msg="" items types entry idx icon key a
+    local sel=0 act=0 msg="" scroll=0 items types entry idx icon key a
 
     local folder_actions=("open" "copy path" "reveal in finder")
     local file_actions=("copy path" "open in editor" "reveal in finder")
@@ -30,9 +30,27 @@ br() {
         fi
         (( act >= ${#cur_actions[@]} )) && act=0
 
+        local rows=$(tput lines)
+        local visible=$(( rows - 7 ))
+        (( visible < 1 )) && visible=1
+
+        (( sel < scroll )) && scroll=$sel
+        (( sel >= scroll + visible )) && scroll=$(( sel - visible + 1 ))
+        (( scroll < 0 )) && scroll=0
+
+        local total=${#items[@]}
+        local end=$(( scroll + visible ))
+        (( end > total )) && end=$total
+
         local buf=$'\e[H\e[1;34m  '"$(pwd)"$'\e[0m\e[K\n\e[K\n'
 
-        for idx in {1..${#items[@]}}; do
+        if (( scroll > 0 )); then
+            buf+=$'  \e[2m  ↑ '"$scroll"$' more\e[0m\e[K\n'
+        else
+            buf+=$'\e[K\n'
+        fi
+
+        for idx in {$((scroll + 1))..$end}; do
             [[ "${types[$idx]}" == "folder" ]] && icon="+" || icon=" "
 
             if (( idx == sel + 1 )); then
@@ -43,6 +61,13 @@ br() {
                 buf+=$'    '"${items[$idx]}"$'\e[K\n'
             fi
         done
+
+        local remaining=$(( total - end ))
+        if (( remaining > 0 )); then
+            buf+=$'  \e[2m  ↓ '"$remaining"$' more\e[0m\e[K\n'
+        else
+            buf+=$'\e[K\n'
+        fi
 
         buf+=$'\e[K\n  '
         for a in {1..${#cur_actions[@]}}; do
@@ -86,7 +111,7 @@ br() {
 
                 case $action in
                     "open")
-                        builtin cd "${target%/}" 2>/dev/null && sel=0 && act=0
+                        builtin cd "${target%/}" 2>/dev/null && sel=0 && act=0 && scroll=0
                         ;;
                     "copy path")
                         printf '%s' "$full_path" | pbcopy
