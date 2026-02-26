@@ -31,6 +31,8 @@ br
 ```sh
 rm -rf ~/.br && sed -i '' '/\.br\/br\.zsh/d' ~/.zshrc
 ```
+
+## Screenshot
 ![br](screenshot.png)
 
 ## Requirements
