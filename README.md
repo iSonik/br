@@ -9,6 +9,8 @@ Browse directories from your terminal. Zero dependencies, pure zsh.
 curl -sL https://raw.githubusercontent.com/iSonik/br/main/install.sh | sh
 ```
 
+Then restart your terminal or run `source ~/.zshrc`.
+
 ## Usage
 
 ```sh
