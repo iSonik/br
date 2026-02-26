@@ -36,6 +36,7 @@ rm -rf ~/.br && sed -i '' '/\.br\/br\.zsh/d' ~/.zshrc
 
 ## Screenshot
 ![br](screenshot.png)
+[Screenshot made with OpenSnapper](https://github.com/iSonik/OpenSnapper)
 
 ## Requirements
 
